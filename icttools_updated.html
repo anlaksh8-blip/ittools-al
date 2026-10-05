@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Tools - A/L ICT Master Workspace</title>
+    
+    <!-- Optimized Font Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(-45deg, #090d16, #111827, #1e1b4b, #0f172a);
+            --bg-nav: rgba(15, 23, 42, 0.85);
+            --text-color: #f8fafc;
+            --text-dim: #94a3b8;
+            --primary: #38bdf8;
+            --accent: #34d399;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --footer-bg: rgba(15, 23, 42, 0.9);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(-45deg, #f0f4f8, #e2e8f0, #cbd5e1, #f8fafc);
+            --bg-nav: rgba(255, 255, 255, 0.9);
+            --text-color: #0f172a;
+            --text-dim: #64748b;
+            --primary: #0284c7;
+            --accent: #059669;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-border: rgba(0, 0, 0, 0.1);
+            --footer-bg: rgba(241, 245, 249, 0.9);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            0% { opacity: 0; transform: translateY(-15px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Top Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: var(--bg-nav);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .logo-area {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .menu-btn {
+            background: rgba(56, 189, 248, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+            transform: scale(1.05);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 55px;
+            left: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            min-width: 240px;
+            z-index: 1100;
+            transform-origin: top left;
+        }
+
+        .dropdown-menu.active {
+            display: flex;
+            animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .menu-item-btn {
+            background: rgba(56, 189, 248, 0.08);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--text-color);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 13px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .menu-item-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+            transform: translateX(4px);
+        }
+
+        .theme-toggle-btn {
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--accent);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            background: var(--accent);
+            color: #0f172a;
+        }
+
+        .back-btn {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--primary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+        }
+
+        .view-section {
+            display: none;
+            width: 100%;
+            flex: 1;
+        }
+
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .hero h1 span { color: var(--primary); }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--accent);
+            background: rgba(52, 211, 153, 0.1);
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 30px;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .section-title {
+            font-size: 22px;
+            color: var(--text-color);
+            margin-bottom: 25px;
+            font-weight: 600;
+            border-left: 4px solid var(--primary);
+            padding-left: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .card-icon { font-size: 34px; }
+        .card h3 { font-size: 18px; color: var(--primary); font-weight: 600; }
+        .card p { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+        .card-action {
+            margin-top: auto;
+            font-size: 13px;
+            color: var(--accent);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .workspace-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .workspace-header h2 { font-size: 20px; color: var(--accent); }
+
+        .db-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .db-paper-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 22px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .db-paper-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+
+        .db-paper-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-bottom-left-radius: 12px;
+        }
+
+        /* --- PYTHON IDE STYLES --- */
+        .workspace-ide {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 15px;
+            flex: 1;
+        }
+        @media (min-width: 768px) { .workspace-ide { flex-direction: row; } }
+
+        .panel-ide {
+            flex: 1;
+            background: var(--card-bg);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-header-ide {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            font-size: 13px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        textarea.code-textarea {
+            flex: 1;
+            background: transparent;
+            color: var(--accent);
+            padding: 15px;
+            border: none;
+            outline: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            resize: none;
+            line-height: 1.5;
+            min-height: 350px;
+        }
+
+        .output-box-py {
+            flex: 1;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            color: var(--text-color);
+            overflow-y: auto;
+            white-space: pre-wrap;
+            background: rgba(0,0,0,0.1);
+            line-height: 1.5;
+            min-height: 350px;
+        }
+
+        .error-box {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 4px solid #ef4444;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        .btn-group-py { display: flex; gap: 8px; }
+        button.ide-btn {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-run-py { background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; }
+        .btn-clear-py { background: rgba(100,100,100,0.2); color: var(--text-color); }
+
+        /* --- NUMBER SYSTEM WORKSPACE STYLES --- */
+        .num-sys-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .num-sys-box h2 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            font-weight: 600;
+            font-size: 22px;
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .tab-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            color: var(--text-dim);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--primary);
+            color: #0f172a;
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            font-weight: 600;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .input-group-num { margin-bottom: 20px; text-align: left; }
+        .input-group-num label { display: block; font-size: 14px; margin-bottom: 8px; color: var(--primary); }
+        .num-sys-box select, .num-sys-box input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            outline: none;
+            font-size: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+        }
+        .num-sys-box select:focus, .num-sys-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+        }
+        .row-group { display: flex; gap: 15px; }
+        .row-group .input-group-num { flex: 1; }
+
+        .error-msg { color: #ff4757; font-size: 13px; margin-top: 8px; display: none; }
+        .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .result-card-num {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            text-align: left;
+        }
+        .result-title-num { font-size: 12px; color: var(--primary); margin-bottom: 5px; }
+        .result-value-num { font-size: 18px; font-weight: 600; font-family: monospace; word-wrap: break-word; }
+        .glow { animation: textGlow 1s ease-in-out; }
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 5px var(--text-color), 0 0 10px var(--primary); }
+            50% { text-shadow: 0 0 20px var(--text-color), 0 0 30px var(--primary); }
+            100% { text-shadow: none; }
+        }
+
+        /* --- NETWORK WORKSPACE STYLES --- */
+        .net-container { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; width: 100%; }
+        .net-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 20px;
+        }
+        .net-panel-title { font-size: 16px; color: var(--primary); font-weight: 600; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
+        .form-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+        .net-input-group { display: flex; flex-direction: column; gap: 5px; }
+        .net-input-group label { font-size: 13px; color: var(--text-dim); }
+        .net-input-group input, .net-input-group select {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--card-border);
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--accent);
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            outline: none;
+        }
+        .btn-calculate {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #0284c7, #2563eb);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .result-box-net {
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.25);
+            border-left: 5px solid var(--accent);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            color: var(--text-color);
+            display: none;
+            line-height: 1.8;
+        }
+        .result-item-net {
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .practical-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 768px) { .practical-grid { grid-template-columns: 1fr 1fr; } }
+        .practical-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--card-border); padding: 15px; border-radius: 12px; }
+        .practical-card h3 { font-size: 14px; color: #f43f5e; margin-bottom: 8px; }
+        .practical-card ul { padding-left: 18px; font-size: 13px; color: var(--text-dim); line-height: 1.6; }
+
+        /* --- DATABASE / INSTANT MYSQL WEB STUDIO --- */
+        .db-workspace-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--card-border);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            width: 100%;
+        }
+        .db-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .db-header-bar h1 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .db-subtitle {
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .db-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border: 1px solid var(--card-border);
+            margin-bottom: 15px;
+        }
+        .db-active-db { color: var(--primary); font-weight: bold; }
+        .db-textarea {
+            width: 100%;
+            height: 180px;
+            background-color: rgba(0,0,0,0.2);
+            color: var(--primary);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 15px;
+            resize: vertical;
+            line-height: 1.4;
+            outline: none;
+        }
+        .db-textarea:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+        .db-btn-group { display: flex; gap: 10px; margin-top: 15px; }
+        .db-btn-run { flex: 2; background: #3b82f6; color: white; padding: 12px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .db-btn-run:hover { background: #2563eb; }
+        .db-btn-clear { flex: 1; background: rgba(100,100,100,0.3); color: var(--text-color); padding: 12px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
+        .db-section-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-top: 25px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .db-output-box, .db-schema-box {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+            overflow-x: auto;
+        }
+        .db-workspace-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .db-workspace-container th, .db-workspace-container td {
+            border: 1px solid var(--card-border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .db-workspace-container th { background: rgba(0,0,0,0.3); color: var(--primary); }
+        .db-table-card {
+            background: rgba(0,0,0,0.15);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+        }
+        .db-table-card-header { color: var(--primary); font-weight: bold; font-size: 0.9rem; margin-bottom: 6px; }
+        .msg-success { color: #10b981; font-weight: bold; margin-bottom: 8px; }
+        .msg-error { color: #ef4444; font-weight: bold; margin-bottom: 8px; }
+        .msg-info { color: var(--primary); margin-bottom: 8px; }
+        .db-workspace-container code { background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px; color: #f43f5e; font-size: 0.85rem; }
+
+        /* --- WEB DEVELOPMENT LIVE WORKSPACE STYLES --- */
+        .web-dev-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .web-editor-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .web-tab-bar {
+            display: flex;
+            background: rgba(0, 0, 0, 0.25);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .web-tab-btn {
+            padding: 12px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .web-tab-btn.active {
+            color: var(--primary);
+            background: rgba(56, 189, 248, 0.1);
+            border-bottom: 2px solid var(--primary);
+        }
+        .web-code-area {
+            width: 100%;
+            height: 250px;
+            background: transparent;
+            color: var(--accent);
+            border: none;
+            padding: 15px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            outline: none;
+            resize: vertical;
+            line-height: 1.5;
+            display: none;
+        }
+        .web-code-area.active { display: block; }
+        
+        .live-preview-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .live-preview-header {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 10px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+        .preview-iframe {
+            width: 100%;
+            height: 320px;
+            background: #ffffff;
+            border: none;
+            border-radius: 0 0 16px 16px;
+            transition: all 0.3s ease;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--footer-bg);
+            border-top: 1px solid var(--card-border);
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+        footer span { color: var(--primary); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation Bar -->
+    <nav>
+        <div class="nav-left">
+            <button class="menu-btn" onclick="toggleMenu()" title="Workspaces Menu">☰</button>
+            <div class="logo-area" onclick="switchView('homeView')">⚡ IT Tools</div>
+
+            <div id="dropdownMenu" class="dropdown-menu">
+                <button class="menu-item-btn" onclick="switchView('homeView')">🏠 Home / Dashboard</button>
+                <button class="menu-item-btn" onclick="switchView('pythonView')">🐍 Python Workspace</button>
+                <button class="menu-item-btn" onclick="switchView('numSystemView')">🔢 Number System & Arithmetic</button>
+                <button class="menu-item-btn" onclick="switchView('networkView')">🌐 Network Calculator</button>
+                <button class="menu-item-btn" onclick="switchView('databaseView')">🗄️ MySQL Web Studio</button>
+                <button class="menu-item-btn" onclick="switchView('webDevView')">🌐 Web Development Live Studio</button>
+                <button class="menu-item-btn" onclick="switchView('pastPapersView')">📚 Past Papers (2016-2025)</button>
+            </div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Light/Dark Theme">🌓 Theme</button>
+        </div>
+    </nav>
+
+    <!-- VIEW 1: HOME PAGE -->
+    <div id="homeView" class="view-section active">
+        <div class="container">
+            <div class="hero">
+                <h1 id="heroTitle">Welcome to <span>IT Tools Workspace</span></h1>
+                <p id="heroSubtitle">Advanced Level Information and Communication Technology (A/L ICT)</p>
+            </div>
+
+            <div class="section-title" id="secWorkspaceTitle">Workspaces & Utilities</div>
+            <div class="grid">
+                <div class="card" onclick="switchView('pythonView')">
+                    <div class="card-icon">🐍</div>
+                    <h3>Python Workspace</h3>
+                    <p>Dedicated workspace to write, test, and practice Python programming codes seamlessly.</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+
+                <div class="card" onclick="switchView('numSystemView')">
+                    <div class="card-icon">🔢</div>
+                    <h3>Number System & Arithmetic</h3>
+                    <p>Convert and perform arithmetic calculations between Binary, Decimal, Hexadecimal, and Octal systems (including fractions).</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+
+                <div class="card" onclick="switchView('networkView')">
+                    <div class="card-icon">🌐</div>
+                    <h3>Network Workspace</h3>
+                    <p>Network calculations, Subnetting, CIDR, subnets count, and data transmission speed timers.</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+
+                <div class="card" onclick="switchView('databaseView')">
+                    <div class="card-icon">🗄️</div>
+                    <h3>MySQL Web Studio</h3>
+                    <p>Execute and test real MySQL/SQL commands from CREATE DATABASE to DROP DATABASE.</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+
+                <div class="card" onclick="switchView('webDevView')">
+                    <div class="card-icon">💻</div>
+                    <h3>Web Development Studio</h3>
+                    <p>Write HTML, CSS, and JavaScript with instant live preview and interactive animations.</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+
+                <div class="card" onclick="switchView('pastPapersView')">
+                    <div class="card-icon">📚</div>
+                    <h3>Past Papers</h3>
+                    <p>Study A/L ICT past question papers and marking schemes from 2016 to 2025.</p>
+                    <div class="card-action"><span>Open Workspace</span> →</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 2: PYTHON IDE -->
+    <div id="pythonView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>🐍 A/L ICT - Ultimate Python IDE</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="workspace-ide">
+                <div class="panel-ide">
+                    <div class="panel-header-ide">
+                        <span>📝 Code Editor</span>
+                        <div class="btn-group-py">
+                            <button class="ide-btn btn-clear-py" onclick="clearEditor()">🗑 Clear</button>
+                            <button class="ide-btn btn-run-py" onclick="runPythonCode()">🚀 Run Code</button>
+                        </div>
+                    </div>
+                    <textarea id="code-box" class="code-textarea" spellcheck="false" placeholder='# Write an example code:
+mark1 = float(input("Enter first mark: "))
+print("Mark:", mark1)'></textarea>
+                </div>
+                <div class="panel-ide">
+                    <div class="panel-header-ide">💻 Terminal Output</div>
+                    <div id="output-box" class="output-box-py">Results will appear here instantly...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 3: NUMBER SYSTEM & ARITHMETIC WORKSPACE -->
+    <div id="numSystemView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>🔢 A/L ICT - Number System & Arithmetic Tool</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="num-sys-box">
+                <h2>Number Systems Workspace</h2>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('converter')">Converter</button>
+                    <button class="tab-btn" onclick="switchTab('arithmetic')">Arithmetic</button>
+                </div>
+
+                <div id="converter-tab" class="tab-content active">
+                    <div class="input-group-num">
+                        <label>Select Input Base System:</label>
+                        <select id="baseSelect" onchange="convertNumber()">
+                            <option value="10">Decimal (Base 10)</option>
+                            <option value="2">Binary (Base 2)</option>
+                            <option value="8">Octal (Base 8)</option>
+                            <option value="16">Hexadecimal (Base 16)</option>
+                        </select>
+                    </div>
+                    <div class="input-group-num">
+                        <label>Enter Number Value (Integers or Decimals):</label>
+                        <input type="text" id="numInput" placeholder="Type value here (e.g. 10.5 or 1010.1)..." oninput="convertNumber()" autocomplete="off">
+                        <div id="errorText" class="error-msg">Invalid character or decimal point format entered for this base system!</div>
+                    </div>
+                    <div class="results-grid">
+                        <div class="result-card-num" id="card-10"><div class="result-title-num">Decimal (Base 10)</div><div class="result-value-num" id="res-10">-</div></div>
+                        <div class="result-card-num" id="card-2"><div class="result-title-num">Binary (Base 2)</div><div class="result-value-num" id="res-2">-</div></div>
+                        <div class="result-card-num" id="card-8"><div class="result-title-num">Octal (Base 8)</div><div class="result-value-num" id="res-8">-</div></div>
+                        <div class="result-card-num" id="card-16"><div class="result-title-num">Hexadecimal (Base 16)</div><div class="result-value-num" id="res-16">-</div></div>
+                    </div>
+                </div>
+
+                <div id="arithmetic-tab" class="tab-content">
+                    <div class="row-group">
+                        <div class="input-group-num">
+                            <label>First Number (Num 1):</label>
+                            <input type="text" id="arithNum1" placeholder="e.g. 1010.1" oninput="calculateArithmetic()" autocomplete="off">
+                        </div>
+                        <div class="input-group-num">
+                            <label>Base 1:</label>
+                            <select id="arithBase1" onchange="calculateArithmetic()">
+                                <option value="10">Decimal (10)</option>
+                                <option value="2" selected>Binary (2)</option>
+                                <option value="8">Octal (8)</option>
+                                <option value="16">Hexadecimal (16)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row-group">
+                        <div class="input-group-num">
+                            <label>Operation:</label>
+                            <select id="arithOp" onchange="calculateArithmetic()">
+                                <option value="+">Addition (+)</option>
+                                <option value="-">Subtraction (-)</option>
+                                <option value="*">Multiplication (*)</option>
+                                <option value="/">Division (/)</option>
+                            </select>
+                        </div>
+                        <div class="input-group-num">
+                            <label>Output Base:</label>
+                            <select id="arithOutBase" onchange="calculateArithmetic()">
+                                <option value="10">Decimal (10)</option>
+                                <option value="2" selected>Binary (2)</option>
+                                <option value="8">Octal (8)</option>
+                                <option value="16">Hexadecimal (16)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row-group">
+                        <div class="input-group-num">
+                            <label>Second Number (Num 2):</label>
+                            <input type="text" id="arithNum2" placeholder="e.g. 11.1" oninput="calculateArithmetic()" autocomplete="off">
+                        </div>
+                        <div class="input-group-num">
+                            <label>Base 2:</label>
+                            <select id="arithBase2" onchange="calculateArithmetic()">
+                                <option value="10">Decimal (10)</option>
+                                <option value="2" selected>Binary (2)</option>
+                                <option value="8">Octal (8)</option>
+                                <option value="16">Hexadecimal (16)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="arithErrorText" class="error-msg" style="margin-bottom: 10px;">Invalid values or operation! (Check for division by zero)</div>
+
+                    <div class="results-grid" style="grid-template-columns: 1fr;">
+                        <div class="result-card-num" style="grid-column: span 2;">
+                            <div class="result-title-num" id="arithResultTitle">Result</div>
+                            <div class="result-value-num" id="res-arith">-</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 4: NETWORK WORKSPACE -->
+    <div id="networkView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>🌐 A/L ICT - Networking & Subnetting Workspace</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="net-container">
+                <div class="net-panel">
+                    <div class="net-panel-title">🔢 IP Subnetting, CIDR & Network Calculator</div>
+                    <div class="form-grid">
+                        <div class="net-input-group">
+                            <label>Enter IP Address:</label>
+                            <input type="text" id="ipInput" placeholder="192.168.1.10" oninput="detectClassAndMask()">
+                        </div>
+                        <div class="net-input-group">
+                            <label>Subnet Mask or CIDR Value:</label>
+                            <input type="text" id="maskInput" placeholder="255.255.255.0 or /24" value="255.255.255.0">
+                        </div>
+                        <button class="btn-calculate" onclick="calculateSubnet()">🚀 Run All Calculations</button>
+                    </div>
+                    <div id="subnetResult" class="result-box-net"></div>
+                </div>
+
+                <div class="net-panel">
+                    <div class="net-panel-title">⚡ Data Transmission Speed & Time Calculator</div>
+                    <div class="form-grid">
+                        <div class="net-input-group">
+                            <label>File Size:</label>
+                            <input type="number" id="fileSize" placeholder="e.g. 100">
+                        </div>
+                        <div class="net-input-group">
+                            <label>Select Unit:</label>
+                            <select id="fileUnit">
+                                <option value="MB">Megabytes (MB)</option>
+                                <option value="GB">Gigabytes (GB)</option>
+                                <option value="KB">Kilobytes (KB)</option>
+                            </select>
+                        </div>
+                        <div class="net-input-group">
+                            <label>Transmission Speed (Mbps):</label>
+                            <input type="number" id="netSpeed" placeholder="e.g. 10">
+                        </div>
+                        <button class="btn-calculate" onclick="calculateTime()">⏱️ Calculate Time</button>
+                    </div>
+                    <div id="timeResult" class="result-box-net"></div>
+                </div>
+
+                <div class="net-panel">
+                    <div class="net-panel-title">🛠️ Network Practicals & Commands Guide</div>
+                    <div class="practical-grid">
+                        <div class="practical-card">
+                            <h3>1. Network Cable Pinouts</h3>
+                            <ul>
+                                <li><b>Straight-through:</b> Connecting a computer to a switch.</li>
+                                <li><b>Crossover:</b> Connecting two computers directly.</li>
+                            </ul>
+                        </div>
+                        <div class="practical-card">
+                            <h3>2. Essential Network Commands</h3>
+                            <ul>
+                                <li><code>ipconfig</code> - View IP configuration details.</li>
+                                <li><code>ping [IP]</code> - Test network connectivity.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 5: DATABASE / INSTANT MYSQL WEB STUDIO -->
+    <div id="databaseView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>🗄️ A/L ICT - MySQL Web Studio Workspace</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="db-workspace-container">
+                <div class="db-header-bar">
+                    <h1>⚡ Real MySQL Web Studio</h1>
+                </div>
+                <p class="db-subtitle">A/L ICT - Type and run everything from CREATE DATABASE to DROP DATABASE</p>
+
+                <div class="db-status-bar">
+                    <span>Engine Status: <strong id="engine-status" style="color: #10b981;">READY ✅</strong></span>
+                    <span>Active DB: <strong id="active-db-display" class="db-active-db">NONE</strong></span>
+                </div>
+
+                <label for="sql-input" style="display:block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem;">
+                    Type your MySQL Codes here:
+                </label>
+                <textarea id="sql-input" class="db-textarea" placeholder="First create a database:&#10;CREATE DATABASE school;&#10;USE school;&#10;&#10;Then write any CREATE TABLE, INSERT, SELECT, UPDATE, DELETE code..."></textarea>
+
+                <div class="db-btn-group">
+                    <button class="db-btn-run" id="run-btn" onclick="executeSQL()">▶ Run SQL Commands</button>
+                    <button class="db-btn-clear" onclick="clearDbEditor()">🧹 Clear Editor</button>
+                </div>
+
+                <div class="db-section-title">▶ Execution Output</div>
+                <div class="db-output-box" id="output">
+                    <span style="color: var(--text-dim);">Execution output will appear here...</span>
+                </div>
+
+                <div class="db-section-title">📊 Active Database Schema Inspector</div>
+                <div class="db-schema-box" id="schema-output">
+                    <span style="color: var(--text-dim);">No Database selected.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 6: WEB DEVELOPMENT LIVE STUDIO (HTML / CSS / JS EDITOR) -->
+    <div id="webDevView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>💻 Web Development Studio - Live Workspace</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="web-dev-container">
+                <div class="web-editor-card">
+                    <div class="web-tab-bar">
+                        <button class="web-tab-btn active" onclick="switchWebTab('html')">🌐 HTML</button>
+                        <button class="web-tab-btn" onclick="switchWebTab('css')">🎨 CSS</button>
+                        <button class="web-tab-btn" onclick="switchWebTab('js')">⚡ JavaScript</button>
+                    </div>
+                    <textarea id="web-html" class="web-code-area active" spellcheck="false" oninput="updateLiveWebPreview()" placeholder="Type HTML Code Here..."><!-- Example -->
+<div class="card-demo">
+  <h2>Hello Web Developer!</h2>
+  <p>Type HTML, CSS & JS to see instant live updates below.</p>
+  <button id="demoBtn">Click Me</button>
+</div></textarea>
+                    
+                    <textarea id="web-css" class="web-code-area" spellcheck="false" oninput="updateLiveWebPreview()" placeholder="Type CSS Code Here...">/* Example Styles */
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #0f172a;
+  color: #fff;
+}
+.card-demo {
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  text-align: center;
+  border: 1px solid #38bdf8;
+}
+button {
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+button:hover { transform: scale(1.05); }</textarea>
+
+                    <textarea id="web-js" class="web-code-area" spellcheck="false" oninput="updateLiveWebPreview()" placeholder="Type JS Code Here...">// Example Script
+document.getElementById('demoBtn').addEventListener('click', function() {
+  alert('Button clicked! Web development made easy.');
+});</textarea>
+                </div>
+
+                <div class="live-preview-box">
+                    <div class="live-preview-header">
+                        <span>🖥️ Live Preview Output</span>
+                        <span style="display: flex; align-items: center; gap: 6px;"><span class="live-indicator"></span> LIVE</span>
+                    </div>
+                    <iframe id="web-preview-frame" class="preview-iframe"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEW 7: PAST PAPERS WORKSPACE -->
+    <div id="pastPapersView" class="view-section">
+        <div class="workspace-wrapper">
+            <div class="workspace-header">
+                <h2>📚 A/L ICT - Past Papers (2016 - 2025)</h2>
+                <button class="back-btn" onclick="switchView('homeView')">← Back to Home</button>
+            </div>
+            <div class="net-container">
+                <div class="net-panel">
+                    <div class="net-panel-title">🗄️ Database Records View</div>
+                    <p style="color: var(--text-dim); font-size: 14px; margin-bottom: 10px;">Displaying Advanced Level ICT question papers and marking schemes from 2016 to 2025 as database records:</p>
+                    
+                    <div class="db-card-grid" id="past-paper-db-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Developed by <span>Pathum Lakshan</span> | All Rights Reserved © 2026</p>
+    </footer>
+
+    <script>
+        // View Switcher logic
+        function switchView(viewId) {
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (viewId === 'pastPapersView') {
+                initPastPaperDatabaseCards();
+            }
+            if (viewId === 'numSystemView') {
+                convertNumber();
+            }
+            if (viewId === 'webDevView') {
+                updateLiveWebPreview();
+            }
+            document.getElementById('dropdownMenu').classList.remove('active');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('active');
+        }
+
+        window.addEventListener('click', function(e) {
+            const menu = document.getElementById('dropdownMenu');
+            const menuBtn = document.querySelector('.menu-btn');
+            if (menu && menuBtn && !menu.contains(e.target) && !menuBtn.contains(e.target)) {
+                menu.classList.remove('active');
+            }
+        });
+
+        function toggleTheme() {
+            const root = document.getElementById('htmlRoot');
+            const currentTheme = root.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                root.setAttribute('data-theme', 'light');
+            } else {
+                root.setAttribute('data-theme', 'dark');
+            }
+        }
+
+        // Tab Switching for Number System Workspace
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tabName === 'converter') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('converter-tab').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('arithmetic-tab').classList.add('active');
+                calculateArithmetic();
+            }
+        }
+
+        // --- WEB DEVELOPMENT LIVE WORKSPACE LOGIC ---
+        function switchWebTab(type) {
+            const tabs = document.querySelectorAll('.web-tab-btn');
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            document.getElementById('web-html').classList.remove('active');
+            document.getElementById('web-css').classList.remove('active');
+            document.getElementById('web-js').classList.remove('active');
+
+            if (type === 'html') {
+                tabs[0].classList.add('active');
+                document.getElementById('web-html').classList.add('active');
+            } else if (type === 'css') {
+                tabs[1].classList.add('active');
+                document.getElementById('web-css').classList.add('active');
+            } else if (type === 'js') {
+                tabs[2].classList.add('active');
+                document.getElementById('web-js').classList.add('active');
+            }
+        }
+
+        function updateLiveWebPreview() {
+            const htmlCode = document.getElementById('web-html').value;
+            const cssCode = `<style>${document.getElementById('web-css').value}</style>`;
+            const jsCode = `<script>${document.getElementById('web-js').value}<\/script>`;
+            
+            const frame = document.getElementById('web-preview-frame');
+            const previewDoc = frame.contentDocument || frame.contentWindow.document;
+            
+            previewDoc.open();
+            previewDoc.write(htmlCode + cssCode + jsCode);
+            previewDoc.close();
+        }
+
+        // --- Past Papers Database Cards Logic (2016 - 2025) ---
+        // Put the PDF files in: past-papers/2016.pdf ... past-papers/2025.pdf
+        const pastPaperYears = [2025, 2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016];
+
+        function getPastPaperPath(year) {
+            return `past-papers/${year}.pdf`;
+        }
+
+        function initPastPaperDatabaseCards() {
+            const gridContainer = document.getElementById('past-paper-db-grid');
+            if (gridContainer.children.length > 0) return;
+
+            gridContainer.innerHTML = '';
+
+            pastPaperYears.forEach((year) => {
+                const pdfPath = getPastPaperPath(year);
+                const card = document.createElement('div');
+                card.className = 'db-paper-card animate-fade-in';
+                card.innerHTML = `
+                    <div class="db-paper-badge">ID: PP-${year}</div>
+                    <div style="font-size: 28px; margin-bottom: 10px;">📄</div>
+                    <h3 style="color: var(--primary); font-size: 18px; font-weight: 600; margin-bottom: 5px;">Year ${year}</h3>
+                    <p style="color: var(--text-dim); font-size: 13px; margin-bottom: 15px; line-height: 1.5;">A/L ICT Sinhala Medium Question Paper - ${year}.</p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--card-border); padding-top: 12px; gap: 8px; flex-wrap: wrap;">
+                        <span style="color: #10b981; font-size: 11px; font-weight: 600; background: rgba(16,185,129,0.1); padding: 4px 8px; border-radius: 4px;">PDF AVAILABLE</span>
+                        <div style="display:flex; gap:7px; flex-wrap:wrap;">
+                            <a href="${pdfPath}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); color: var(--primary); padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">👁 View PDF</a>
+                            <a href="${pdfPath}" download="AL-ICT-${year}-Sinhala-Medium.pdf" style="text-decoration:none; background: linear-gradient(90deg, #0284c7, #2563eb); border: 1px solid rgba(56,189,248,0.5); color: white; padding: 6px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;">⬇ Download</a>
+                        </div>
+                    </div>
+                `;
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // --- Python IDE Script ---
+        function runPythonCode() {
+            let code = document.getElementById('code-box').value;
+            let outputBox = document.getElementById('output-box');
+            outputBox.innerHTML = "";
+            if (!code.trim()) {
+                outputBox.innerHTML = "<span style='color:var(--text-dim);'>Please enter a code...</span>";
+                return;
+            }
+            let logs = [];
+            window.python_print = function(...args) {
+                logs.push(args.map(arg => typeof arg === 'object' ? JSON.stringify(arg) : String(arg)).join(" "));
+            };
+            window.python_input = function(promptText = "Enter value:") {
+                let val = prompt(promptText);
+                return val === null ? "" : val;
+            };
+            try {
+                let lines = code.split('\n');
+                let jsLines = [];
+                let indentStack = [0];
+                for (let i = 0; i < lines.length; i++) {
+                    let originalLine = lines[i];
+                    let trimmed = originalLine.trim();
+                    if (trimmed === '' || trimmed.startsWith('#')) continue;
+                    let leadingSpaces = originalLine.search(/\S/);
+                    while (leadingSpaces < indentStack[indentStack.length - 1]) {
+                        jsLines.push('}');
+                        indentStack.pop();
+                    }
+                    let isBlock = false;
+                    if (trimmed.endsWith(':')) {
+                        trimmed = trimmed.slice(0, -1).trim();
+                        isBlock = true;
+                    }
+                    trimmed = trimmed
+                        .replace(/\bprint\s*\(/g, 'python_print(')
+                        .replace(/\binput\s*\(/g, 'python_input(')
+                        .replace(/\bint\s*\(/g, 'Number.parseInt(')
+                        .replace(/\bfloat\s*\(/g, 'Number.parseFloat(')
+                        .replace(/\bstr\s*\(/g, 'String(')
+                        .replace(/\bTrue\b/g, 'true')
+                        .replace(/\bFalse\b/g, 'false')
+                        .replace(/\band\b/g, '&&')
+                        .replace(/\bor\b/g, '||')
+                        .replace(/\bnot\b/g, '!');
+                    
+                    if (isBlock) trimmed += ' {';
+                    jsLines.push(trimmed);
+                    if (isBlock) indentStack.push(leadingSpaces + 4);
+                }
+                while (indentStack.length > 1) { jsLines.push('}'); indentStack.pop(); }
+                let executeUserScript = new Function(jsLines.join('\n'));
+                executeUserScript();
+                outputBox.innerHTML = logs.length > 0 ? logs.join('\n') : "<span style='color:var(--primary);'>[ Code executed successfully, No output ]</span>";
+            } catch (err) {
+                outputBox.innerHTML = `<div class="error-box"><strong>⚠️ Error:</strong><br>${err.message}</div>`;
+            }
+        }
+        function clearEditor() {
+            document.getElementById('code-box').value = "";
+            document.getElementById('output-box').innerHTML = "Results will appear here instantly...";
+        }
+
+        // --- Number System & Arithmetic Scripts ---
+        function validateInput(num, base) {
+            if (num === "") return true;
+            const parts = num.split('.');
+            if (parts.length > 2) return false;
+
+            const regexes = {
+                "2": /^[01]+$/,
+                "8": /^[0-7]+$/,
+                "10": /^[0-9]+$/,
+                "16": /^[0-9A-Fa-f]+$/
+            };
+
+            const baseRegex = regexes[base];
+            if (parts[0] !== "" && !baseRegex.test(parts[0])) return false;
+            if (parts.length === 2) {
+                if (parts[1] === "" || !baseRegex.test(parts[1])) return false;
+            }
+            return true;
+        }
+
+        function convertNumber() {
+            const base = parseInt(document.getElementById("baseSelect").value);
+            const inputVal = document.getElementById("numInput").value.trim();
+            const errorText = document.getElementById("errorText");
+
+            document.querySelectorAll('#converter-tab .result-card-num').forEach(card => {
+                card.style.display = 'block';
+                card.style.opacity = '1';
+            });
+            
+            if (inputVal === "") {
+                clearNumResults();
+                errorText.style.display = "none";
+                return;
+            }
+
+            if (!validateInput(inputVal, base)) {
+                errorText.style.display = "block";
+                clearNumResults();
+                return;
+            } else {
+                errorText.style.display = "none";
+            }
+
+            document.getElementById(`card-${base}`).style.display = 'none';
+
+            const decimalValue = parseToDecimal(inputVal, base);
+
+            updateNumResult("10", convertToBase(decimalValue, 10));
+            updateNumResult("2", convertToBase(decimalValue, 2));
+            updateNumResult("8", convertToBase(decimalValue, 8));
+            updateNumResult("16", convertToBase(decimalValue, 16));
+        }
+
+        function parseToDecimal(inputVal, base) {
+            const parts = inputVal.split('.');
+            const intPartStr = parts[0] === "" ? "0" : parts[0];
+            const intDec = parseInt(intPartStr, base);
+            
+            let fracDec = 0;
+            if (parts.length > 1 && parts[1] !== "") {
+                const fracPartStr = parts[1];
+                for (let i = 0; i < fracPartStr.length; i++) {
+                    let digitVal = parseInt(fracPartStr[i], base);
+                    fracDec += digitVal * Math.pow(base, -(i + 1));
+                }
+            }
+            return intDec + fracDec;
+        }
+
+        function convertToBase(decimalVal, targetBase) {
+            let intPart = Math.floor(decimalVal);
+            let fracPart = decimalVal - intPart;
+            
+            let intStr = intPart.toString(targetBase).toUpperCase();
+            let fracStr = "";
+            
+            if (fracPart > 0) {
+                let currentFrac = fracPart;
+                let digits = [];
+                let precision = 6; 
+                while (currentFrac > 0 && digits.length < precision) {
+                    currentFrac *= targetBase;
+                    let digit = Math.floor(currentFrac);
+                    digits.push(digit.toString(targetBase).toUpperCase());
+                    currentFrac -= digit;
+                }
+                if (digits.length > 0) {
+                    fracStr = "." + digits.join("");
+                }
+            }
+            return intStr + fracStr;
+        }
+
+        function updateNumResult(base, value) {
+            const el = document.getElementById(`res-${base}`);
+            if(el) {
+                el.innerText = value;
+                el.classList.remove("glow");
+                void el.offsetWidth;
+                el.classList.add("glow");
+            }
+        }
+
+        function clearNumResults() {
+            ["10", "2", "8", "16"].forEach(b => {
+                const el = document.getElementById(`res-${b}`);
+                if (el) el.innerText = "-";
+            });
+        }
+
+        function calculateArithmetic() {
+            const num1Str = document.getElementById("arithNum1").value.trim();
+            const base1 = parseInt(document.getElementById("arithBase1").value);
+            const num2Str = document.getElementById("arithNum2").value.trim();
+            const base2 = parseInt(document.getElementById("arithBase2").value);
+            const op = document.getElementById("arithOp").value;
+            const outBase = parseInt(document.getElementById("arithOutBase").value);
+            const errEl = document.getElementById("arithErrorText");
+            const resEl = document.getElementById("res-arith");
+            const titleEl = document.getElementById("arithResultTitle");
+
+            titleEl.innerText = `Result (Base ${outBase})`;
+
+            if (num1Str === "" || num2Str === "") {
+                resEl.innerText = "-";
+                errEl.style.display = "none";
+                return;
+            }
+
+            if (!validateInput(num1Str, base1) || !validateInput(num2Str, base2)) {
+                errEl.style.display = "block";
+                resEl.innerText = "-";
+                return;
+            } else {
+                errEl.style.display = "none";
+            }
+
+            const dec1 = parseToDecimal(num1Str, base1);
+            const dec2 = parseToDecimal(num2Str, base2);
+            let decResult = 0;
+
+            if (op === "+") decResult = dec1 + dec2;
+            else if (op === "-") decResult = dec1 - dec2;
+            else if (op === "*") decResult = dec1 * dec2;
+            else if (op === "/") {
+                if (dec2 === 0) {
+                    errEl.style.display = "block";
+                    errEl.innerText = "Division by zero is not allowed!";
+                    resEl.innerText = "-";
+                    return;
+                }
+                decResult = dec1 / dec2;
+            }
+
+            if (decResult < 0) {
+                let positiveResult = convertToBase(Math.abs(decResult), outBase);
+                resEl.innerText = "-" + positiveResult;
+            } else if (decResult === 0) {
+                resEl.innerText = "0";
+            } else {
+                resEl.innerText = convertToBase(decResult, outBase);
+            }
+
+            resEl.classList.remove("glow");
+            void resEl.offsetWidth;
+            resEl.classList.add("glow");
+        }
+
+        // --- Network Script ---
+        function detectClassAndMask() {
+            let ip = document.getElementById('ipInput').value.trim();
+            let firstOctet = parseInt(ip.split('.')[0]);
+            let maskInput = document.getElementById('maskInput');
+            if (!isNaN(firstOctet)) {
+                if (firstOctet >= 1 && firstOctet <= 126) maskInput.value = "255.0.0.0";
+                else if (firstOctet >= 128 && firstOctet <= 191) maskInput.value = "255.255.0.0";
+                else if (firstOctet >= 192 && firstOctet <= 223) maskInput.value = "255.255.255.0";
+            }
+        }
+
+        function parseMaskInput(inputStr, firstOctet) {
+            inputStr = inputStr.trim();
+            let maskParts = [255, 255, 255, 255];
+            let cidr = 24;
+            if (inputStr.startsWith('/')) {
+                cidr = parseInt(inputStr.substring(1)) || 24;
+                let fullOctets = Math.floor(cidr / 8);
+                let remBits = cidr % 8;
+                let remVal = remBits === 0 ? 0 : 256 - Math.pow(2, 8 - remBits);
+                for (let i = 0; i < 4; i++) {
+                    maskParts[i] = i < fullOctets ? 255 : (i === fullOctets ? remVal : 0);
+                }
+            } else {
+                let parts = inputStr.split('.').map(Number);
+                if (parts.length === 4) {
+                    maskParts = parts;
+                    let bits = 0;
+                    maskParts.forEach(o => { bits += (o >>> 0).toString(2).split('1').length - 1; });
+                    cidr = bits;
+                } else {
+                    if (firstOctet <= 126) { maskParts = [255,0,0,0]; cidr = 8; }
+                    else if (firstOctet <= 191) { maskParts = [255,255,0,0]; cidr = 16; }
+                    else { maskParts = [255,255,255,0]; cidr = 24; }
+                }
+            }
+            return { maskParts, cidr };
+        }
+
+        function calculateSubnet() {
+            let ipStr = document.getElementById('ipInput').value.trim();
+            let rawMaskStr = document.getElementById('maskInput').value.trim();
+            let resBox = document.getElementById('subnetResult');
+            let ipParts = ipStr.split('.').map(Number);
+            if (ipParts.length !== 4) {
+                resBox.style.display = "block";
+                resBox.innerHTML = "<div class='result-item-net'><span style='color:#f43f5e;'>⚠️ Please enter a valid IP address!</span></div>";
+                return;
+            }
+            let first = ipParts[0];
+            let { maskParts, cidr } = parseMaskInput(rawMaskStr, first);
+            let ipClass = first <= 126 ? "Class A" : (first <= 191 ? "Class B" : (first <= 223 ? "Class C" : "Other"));
+            let defaultCIDR = first <= 126 ? 8 : (first <= 191 ? 16 : 24);
+
+            let netParts = ipParts.map((o, i) => o & maskParts[i]);
+            let invMaskParts = maskParts.map(o => 255 - o);
+            let broadParts = netParts.map((o, i) => o | invMaskParts[i]);
+            let firstUsable = [...netParts]; firstUsable[3] += 1;
+            let lastUsable = [...broadParts]; lastUsable[3] -= 1;
+            
+            let totalIPsPerSubnet = Math.pow(2, 32 - cidr);
+            let usableHosts = totalIPsPerSubnet > 2 ? totalIPsPerSubnet - 2 : 0;
+            let subnetsCount = cidr > defaultCIDR ? Math.pow(2, cidr - defaultCIDR) : 1;
+
+            resBox.style.display = "block";
+            resBox.innerHTML = `
+                <div class="result-item-net"><span>🌐 IP Class & CIDR:</span> <strong>${ipClass} (/${cidr})</strong></div>
+                <div class="result-item-net"><span>🔍 Subnet Mask:</span> <strong>${maskParts.join('.')}</strong></div>
+                <div class="result-item-net"><span>📌 Network ID:</span> <strong>${netParts.join('.')}</strong></div>
+                <div class="result-item-net"><span>📢 Broadcast Address:</span> <strong>${broadParts.join('.')}</strong></div>
+                <div class="result-item-net"><span>📶 Usable IP Range:</span> <strong>${firstUsable.join('.')} to ${lastUsable.join('.')}</strong></div>
+                <div class="result-item-net"><span>🔢 Subnets Count:</span> <strong style="color:var(--primary);">${subnetsCount}</strong></div>
+                <div class="result-item-net"><span>💻 Total IPs per Subnet:</span> <strong style="color:var(--accent);">${totalIPsPerSubnet}</strong></div>
+                <div class="result-item-net"><span>👥 Usable Hosts:</span> <strong style="color:#f43f5e;">${usableHosts}</strong></div>
+            `;
+        }
+
+        function calculateTime() {
+            let size = parseFloat(document.getElementById('fileSize').value);
+            let unit = document.getElementById('fileUnit').value;
+            let speedMbps = parseFloat(document.getElementById('netSpeed').value);
+            let timeRes = document.getElementById('timeResult');
+            if (isNaN(size) || isNaN(speedMbps) || speedMbps <= 0) {
+                timeRes.style.display = "block";
+                timeRes.innerHTML = "<div class='result-item-net'><span style='color:#f43f5e;'>⚠️ Please enter valid values!</span></div>";
+                return;
+            }
+            let sizeInBits = unit === "KB" ? size * 1024 * 8 : (unit === "MB" ? size * 1024 * 1024 * 8 : size * 1024 * 1024 * 1024 * 8);
+            let timeSeconds = sizeInBits / (speedMbps * 1024 * 1024);
+            let mins = Math.floor(timeSeconds / 60);
+            let secs = (timeSeconds % 60).toFixed(2);
+            timeRes.style.display = "block";
+            timeRes.innerHTML = `
+                <div class="result-item-net"><span>⏱️ Time in Seconds:</span> <strong>${timeSeconds.toFixed(2)} seconds</strong></div>
+                <div class="result-item-net"><span>🕒 Time in Minutes:</span> <strong>${mins} minutes and ${secs} seconds</strong></div>
+            `;
+        }
+
+        // --- INSTANT IN-MEMORY MYSQL SIMULATOR ---
+        let databases = {};
+        let activeDbName = null;
+
+        function updateStatusUI() {
+            const activeDbDisplay = document.getElementById('active-db-display');
+            if (activeDbDisplay) activeDbDisplay.innerText = activeDbName ? activeDbName : "NONE";
+        }
+
+        function clearDbEditor() {
+            document.getElementById('sql-input').value = "";
+            document.getElementById('output').innerHTML = '<span style="color: var(--text-dim);">Execution output will appear here...</span>';
+        }
+
+        function renderSchema() {
+            const schemaOutput = document.getElementById('schema-output');
+            if (!activeDbName || !databases[activeDbName]) {
+                schemaOutput.innerHTML = `<span style="color: var(--text-dim);">No Database selected.</span>`;
+                return;
+            }
+
+            const tables = Object.keys(databases[activeDbName].tables);
+            if (tables.length === 0) {
+                schemaOutput.innerHTML = `<span style="color: var(--text-dim);">No tables found in '${activeDbName}'.</span>`;
+                return;
+            }
+
+            let html = "";
+            tables.forEach(tableName => {
+                const table = databases[activeDbName].tables[tableName];
+                html += `<div class="db-table-card">`;
+                html += `<div class="db-table-card-header">📋 Table: <b>${tableName}</b></div>`;
+                html += `<table><thead><tr><th>Column</th><th>Type</th></tr></thead><tbody>`;
+
+                table.columns.forEach(col => {
+                    html += `<tr><td><b>${col.name}</b></td><td><code>${col.type}</code></td></tr>`;
+                });
+                html += `</tbody></table></div>`;
+            });
+
+            schemaOutput.innerHTML = html;
+        }
+
+        function parseColumnDefinition(defStr) {
+            const parts = defStr.trim().split(/\s+/);
+            const name = parts[0].replace(/[`"']/g, '');
+            const type = parts.slice(1).join(' ').toUpperCase() || 'TEXT';
+            return { name, type };
+        }
+
+        function parseValues(valStr) {
+            const values = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < valStr.length; i++) {
+                const char = valStr[i];
+                if (char === "'" || char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    values.push(current.trim().replace(/^['"]|['"]$/g, ''));
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            if (current.trim()) {
+                values.push(current.trim().replace(/^['"]|['"]$/g, ''));
+            }
+            return values;
+        }
+
+        function executeSQL() {
+            const output = document.getElementById('output');
+            const sqlInput = document.getElementById('sql-input');
+
+            const rawCode = sqlInput.value.trim();
+            if (!rawCode) {
+                output.innerHTML = `<div class="msg-error">⚠️ Please enter an SQL Code!</div>`;
+                return;
+            }
+
+            const statements = rawCode.split(';').map(s => s.trim()).filter(s => s.length > 0);
+            let htmlLog = "";
+
+            for (let stmt of statements) {
+                const cleanStmt = stmt.replace(/\s+/g, ' ');
+                const upper = cleanStmt.toUpperCase();
+
+                if (upper.startsWith('CREATE DATABASE')) {
+                    const match = cleanStmt.match(/CREATE\s+DATABASE\s+([^\s;]+)/i);
+                    if (!match) {
+                        htmlLog += `<div class="msg-error">❌ Syntax Error: Database Name Missing!</div>`;
+                        break;
+                    }
+                    const dbName = match[1].replace(/[`"']/g, '');
+                    if (databases[dbName]) {
+                        htmlLog += `<div class="msg-error">❌ Database '${dbName}' already exists!</div>`;
+                    } else {
+                        databases[dbName] = { tables: {} };
+                        if (!activeDbName) activeDbName = dbName;
+                        htmlLog += `<div class="msg-success">✅ Database '${dbName}' Created Successfully!</div>`;
+                    }
+                } 
+                else if (upper.startsWith('USE ')) {
+                    const match = cleanStmt.match(/USE\s+([^\s;]+)/i);
+                    const dbName = match ? match[1].replace(/[`"']/g, '') : null;
+                    if (dbName && databases[dbName]) {
+                        activeDbName = dbName;
+                        htmlLog += `<div class="msg-success">✅ Active Database switched to '${activeDbName}'.</div>`;
+                    } else {
+                        htmlLog += `<div class="msg-error">❌ Database '${dbName}' not found! (Use CREATE DATABASE first)</div>`;
+                    }
+                }
+                else if (upper === 'SHOW DATABASES') {
+                    const dbs = Object.keys(databases);
+                    if (dbs.length === 0) {
+                        htmlLog += `<div class="msg-info">ℹ️ No Databases created yet.</div>`;
+                    } else {
+                        htmlLog += `<table><thead><tr><th>Database Name</th><th>Status</th></tr></thead><tbody>`;
+                        dbs.forEach(d => {
+                            const status = (d === activeDbName) ? "<strong style='color:#10b981;'>Active</strong>" : "";
+                            htmlLog += `<tr><td><b>${d}</b></td><td>${status}</td></tr>`;
+                        });
+                        htmlLog += `</tbody></table>`;
+                    }
+                }
+                else if (upper.startsWith('DROP DATABASE')) {
+                    const match = cleanStmt.match(/DROP\s+DATABASE\s+([^\s;]+)/i);
+                    const dbName = match ? match[1].replace(/[`"']/g, '') : null;
+                    if (dbName && databases[dbName]) {
+                        delete databases[dbName];
+                        if (activeDbName === dbName) {
+                            activeDbName = Object.keys(databases)[0] || null;
+                        }
+                        htmlLog += `<div class="msg-success">🗑️ Database '${dbName}' Dropped Successfully!</div>`;
+                    } else {
+                        htmlLog += `<div class="msg-error">❌ Database '${dbName}' not found!</div>`;
+                    }
+                }
+                else if (upper === 'SHOW TABLES') {
+                    if (!activeDbName || !databases[activeDbName]) {
+                        htmlLog += `<div class="msg-error">❌ No Active Database selected! Use 'USE db_name;' first.</div>`;
+                        break;
+                    }
+                    const tables = Object.keys(databases[activeDbName].tables);
+                    if (tables.length === 0) {
+                        htmlLog += `<div class="msg-info">ℹ️ No Tables found in '${activeDbName}'.</div>`;
+                    } else {
+                        htmlLog += `<table><thead><tr><th>Tables in ${activeDbName}</th></tr></thead><tbody>`;
+                        tables.forEach(t => {
+                            htmlLog += `<tr><td>${t}</td></tr>`;
+                        });
+                        htmlLog += `</tbody></table>`;
+                    }
+                }
+                else if (upper.startsWith('CREATE TABLE')) {
+                    if (!activeDbName || !databases[activeDbName]) {
+                        htmlLog += `<div class="msg-error">❌ No Active Database selected! Run 'CREATE DATABASE db_name;' and 'USE db_name;' first.</div>`;
+                        break;
+                    }
+
+                    const match = cleanStmt.match(/CREATE\s+TABLE\s+([^\s(]+)\s*\((.+)\)/i);
+                    if (!match) {
+                        htmlLog += `<div class="msg-error">❌ Syntax Error in CREATE TABLE statement!</div>`;
+                        break;
+                    }
+
+                    const tableName = match[1].replace(/[`"']/g, '');
+                    const colDefsStr = match[2];
+                    const colDefs = colDefsStr.split(',').map(s => s.trim());
+                    const columns = colDefs.map(def => parseColumnDefinition(def));
+
+                    databases[activeDbName].tables[tableName] = {
+                        columns: columns,
+                        rows: []
+                    };
+
+                    htmlLog += `<div class="msg-success">✅ Table '${tableName}' Created Successfully!</div>`;
+                }
+                else if (upper.startsWith('INSERT INTO')) {
+                    if (!activeDbName || !databases[activeDbName]) {
+                        htmlLog += `<div class="msg-error">❌ No Active Database selected!</div>`;
+                        break;
+                    }
+
+                    const match = cleanStmt.match(/INSERT\s+INTO\s+([^\s(]+)(?:\s*\(([^)]+)\))?\s*VALUES\s*\((.+)\)/i);
+                    if (!match) {
+                        htmlLog += `<div class="msg-error">❌ Syntax Error in INSERT INTO statement!</div>`;
+                        break;
+                    }
+
+                    const tableName = match[1].replace(/[`"']/g, '');
+                    const colNamesStr = match[2];
+                    const valStr = match[3];
+
+                    const table = databases[activeDbName].tables[tableName];
+                    if (!table) {
+                        htmlLog += `<div class="msg-error">❌ Table '${tableName}' does not exist!</div>`;
+                        break;
+                    }
+
+                    const rawValues = parseValues(valStr);
+                    const newRow = {};
+
+                    if (colNamesStr) {
+                        const targetCols = colNamesStr.split(',').map(c => c.trim().replace(/[`"']/g, ''));
+                        targetCols.forEach((col, idx) => {
+                            newRow[col] = rawValues[idx] !== undefined ? rawValues[idx] : null;
+                        });
+                        table.columns.forEach(col => {
+                            if (!(col.name in newRow)) newRow[col.name] = null;
+                        });
+                    } else {
+                        table.columns.forEach((col, idx) => {
+                            newRow[col.name] = rawValues[idx] !== undefined ? rawValues[idx] : null;
+                        });
+                    }
+
+                    table.rows.push(newRow);
+                    htmlLog += `<div class="msg-success">✅ 1 Record Inserted into '${tableName}'.</div>`;
+                }
+                else if (upper.startsWith('SELECT')) {
+                    if (!activeDbName || !databases[activeDbName]) {
+                        htmlLog += `<div class="msg-error">❌ No Active Database selected!</div>`;
+                        break;
+                    }
+
+                    const match = cleanStmt.match(/SELECT\s+(.+)\s+FROM\s+([^\s;]+)/i);
+                    if (!match) {
+                        htmlLog += `<div class="msg-error">❌ Syntax Error in SELECT statement!</div>`;
+                        break;
+                    }
+
+                    const selectFieldsStr = match[1].trim();
+                    const tableName = match[2].replace(/[`"']/g, '');
+                    const table = databases[activeDbName].tables[tableName];
+
+                    if (!table) {
+                        htmlLog += `<div class="msg-error">❌ Table '${tableName}' does not exist!</div>`;
+                        break;
+                    }
+
+                    let displayCols = [];
+                    if (selectFieldsStr === '*') {
+                        displayCols = table.columns.map(c => c.name);
+                    } else {
+                        displayCols = selectFieldsStr.split(',').map(c => c.trim().replace(/[`"']/g, ''));
+                    }
+
+                    htmlLog += `<table><thead><tr>`;
+                    displayCols.forEach(col => htmlLog += `<th>${col}</th>`);
+                    htmlLog += `</tr></thead><tbody>`;
+
+                    if (table.rows.length === 0) {
+                        htmlLog += `<tr><td colspan="${displayCols.length}" style="text-align:center; color: var(--text-dim);">Empty set (0 rows)</td></tr>`;
+                    } else {
+                        table.rows.forEach(row => {
+                            htmlLog += `<tr>`;
+                            displayCols.forEach(col => {
+                                const val = row[col];
+                                htmlLog += `<td>${val !== undefined && val !== null ? val : '<em>NULL</em>'}</td>`;
+                            });
+                            htmlLog += `</tr>`;
+                        });
+                    }
+                    htmlLog += `</tbody></table>`;
+                }
+                else if (upper.startsWith('DROP TABLE')) {
+                    if (!activeDbName || !databases[activeDbName]) {
+                        htmlLog += `<div class="msg-error">❌ No Active Database selected!</div>`;
+                        break;
+                    }
+                    const match = cleanStmt.match(/DROP\s+TABLE\s+([^\s;]+)/i);
+                    const tableName = match ? match[1].replace(/[`"']/g, '') : null;
+                    if (tableName && databases[activeDbName].tables[tableName]) {
+                        delete databases[activeDbName].tables[tableName];
+                        htmlLog += `<div class="msg-success">🗑️ Table '${tableName}' Dropped Successfully!</div>`;
+                    } else {
+                        htmlLog += `<div class="msg-error">❌ Table '${tableName}' not found!</div>`;
+                    }
+                }
+                else {
+                    htmlLog += `<div class="msg-error">❌ Unsupported or Invalid Command: "${cleanStmt}"</div>`;
+                }
+            }
+
+            output.innerHTML = htmlLog;
+            updateStatusUI();
+            renderSchema();
+        }
+    </script>
+</body>
+</html>
